@@ -1,1 +1,1 @@
-# infra-actions
+# infra-github-actions
