@@ -72,7 +72,7 @@ jobs:
           apiKey: ${{ secrets.NR_API_KEY }}
           accountId: ${{ inputs.NR_ACCOUNT_ID }}
           applicationId: ${{ inputs.NR_APP_ID }}
-          revision: ${{ github.SHA::7 }}
+          revision: $(date +'%Y%m%d-%H%M')_${{ github.sha }}
           description: ${{ inputs.DESCRIPTION }}
   velocity:
     runs-on: ubuntu-latest
@@ -84,5 +84,5 @@ jobs:
             -d "token=${{ secrets.VELOCITY_TOKEN }}" \
             -d "repository_url=${{ github.server_url }}/${{ github.repository }}" \
             -d "environment=${{ inputs.ENVIRONMENT }}" \
-            -d "revision=${{ github.SHA::7 }}" \
-            -d "version=${{ github.SHA::7 }}_$(date +'%Y%m%d-%H%M')"
+            -d "revision=${{ github.sha }}" \
+            -d "version=$(date +'%Y%m%d-%H%M')_${{ github.sha }}"
