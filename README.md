@@ -17,7 +17,7 @@ O nome das actions é composto pelos seguintes componentes (entre [ ])
 * java_unit-tests
 * angular_deploy_s3
 * kotlin_analyze_sonar
-* notify-deploy (esse contém apenas a ação, pois não é específico para tecnologia e atua em em diferentes ferramentas)
+* notify-deploy _(esse contém apenas a ação, pois não é específico para tecnologia e atua em em diferentes ferramentas)_
 
 ## Contribuindo
 Para contribuir, adicione seu workflow em /.github/workflows e abra uma PR para a branch _dev_, faça os testes nessa branch e quando estiver validado, passe o seu worflow para a branch _production_.
