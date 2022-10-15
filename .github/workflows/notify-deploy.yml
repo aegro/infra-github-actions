@@ -92,6 +92,6 @@ jobs:
             curl --fail https://velocity.codeclimate.com/deploys \
             -d "token=${{ secrets.VELOCITY_TOKEN }}" \
             -d "repository_url=${{ github.server_url }}/${{ github.repository }}" \
+            -d "revision=${{ inputs.REVISION }}" \
             -d "environment=${{ inputs.ENVIRONMENT }}" \
-            -d "version=$(date +'%Y%m%d-%H%M')" \
-            -d "revision=${{ inputs.REVISION }}"
+            -d "version=${{ github.SHA }}_$(date +'%Y%m%d-%H%M')"
