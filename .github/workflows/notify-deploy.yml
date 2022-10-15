@@ -93,5 +93,5 @@ jobs:
             -d "token=${{ secrets.VELOCITY_TOKEN }}" \
             -d "repository_url=${{ github.server_url }}/${{ github.repository }}" \
             -d "environment=${{ inputs.ENVIRONMENT }}" \
-            -d "version=${{ inputs.VERSION }}" \
+            -d "version=$(date +'%Y%m%d-%H%M')" \
             -d "revision=${{ inputs.REVISION }}"
