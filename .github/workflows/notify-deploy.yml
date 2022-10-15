@@ -72,7 +72,7 @@ jobs:
           apiKey: ${{ secrets.NR_API_KEY }}
           accountId: ${{ inputs.NR_ACCOUNT_ID }}
           applicationId: ${{ inputs.NR_APP_ID }}
-          revision: $(date +'%Y%m%d-%H%M')_${{ github.sha }}
+          revision: ${{ github.sha }}
           description: ${{ inputs.DESCRIPTION }}
   velocity:
     runs-on: ubuntu-latest
@@ -85,4 +85,4 @@ jobs:
             -d "repository_url=${{ github.server_url }}/${{ github.repository }}" \
             -d "environment=${{ inputs.ENVIRONMENT }}" \
             -d "revision=${{ github.sha }}" \
-            -d "version=$(date +'%Y%m%d-%H%M')_${{ github.sha }}"
+            -d "version=${{ github.sha }}"
