@@ -4,10 +4,6 @@ name: Publish Java Artifact
 
 on:
   workflow_call:
-    secrets:
-      GITHUB_TOKEN:
-        description: 'Github Token'
-        required: true
     inputs:
       JAVA_VERSION:
         description: 'Java version'
