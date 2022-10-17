@@ -2,16 +2,6 @@ name: Notify Deploy
 
 on:
   workflow_call:
-    secrets:
-      SLACK_TOKEN:
-        description: 'Slack Token'
-        required: false
-      NR_API_KEY:
-        description: 'New Relic API KEY'
-        required: false
-      VELOCITY_TOKEN:
-        description: 'Velocity Token'
-        required: false
     inputs:
       PREVIOUS_RESULT:
         description: 'Result from previous job(s)'
