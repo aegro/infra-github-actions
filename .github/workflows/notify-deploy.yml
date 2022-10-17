@@ -39,11 +39,12 @@ on:
         
 jobs:
   notify-slack:
+    if: ${{ inputs.SLACK_CHANNEL != '' }}
     uses: ./.github/workflows/notify-deploy_slack.yml
     secrets: inherit
     with:
       PREVIOUS_RESULT: ${{ inputs.PREVIOUS_RESULT }}
-      SLACK_CHANNEL: updates_teste-thomas
+      SLACK_CHANNEL: ${{ inputs.SLACK_CHANNEL }}
   notify-nr:
     if: ${{ inputs.PREVIOUS_RESULT != 'failure' && inputs.NR_APP_ID != '' }}
     uses: ./.github/workflows/notify-deploy_NR.yml
