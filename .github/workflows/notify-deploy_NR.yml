@@ -1,0 +1,33 @@
+name: Notify Deploy
+
+on:
+  workflow_call:
+    secrets:
+      NR_API_KEY:
+        description: 'New Relic API KEY'
+        required: true
+      NR_ACCOUNT_ID:
+        description: 'New Relic account ID'
+        required: true
+    inputs:
+      NR_APP_ID:
+        description: 'New Relic application ID'
+        required: true
+        type: string
+      DESCRIPTION:
+        description: 'Description of deployed version'
+        required: false
+        type: string
+        
+jobs:
+  notify:
+    runs-on: ubuntu-latest
+    steps:
+      - name: New Relic Deployment Notify
+        uses: newrelic/deployment-marker-action@v1.0.0
+        with:
+          apiKey: ${{ secrets.NR_API_KEY }}
+          accountId: ${{ secrets.NR_ACCOUNT_ID }}
+          applicationId: ${{ inputs.NR_APP_ID }}
+          revision: ${{ github.sha }}
+          description: ${{ inputs.DESCRIPTION }}

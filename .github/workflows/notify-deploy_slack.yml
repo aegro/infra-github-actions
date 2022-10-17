@@ -5,22 +5,22 @@ on:
     secrets:
       SLACK_TOKEN:
         description: 'Slack Token'
-        required: false
+        required: true
     inputs:
       PREVIOUS_RESULT:
         description: 'Result from previous job(s)'
-        required: false
+        required: true
         type: string
       SLACK_CHANNEL:
         description: 'Slack channel to notify'
-        required: false
+        required: true
         type: string
         
 jobs:
-  slack:
+  notify:
     runs-on: ubuntu-latest
     steps:
-      - name: Slack Deployment Notify Success
+      - name: Notify Success
         if: ${{ inputs.PREVIOUS_RESULT != 'failure' }}
         env:
           SLACK_BOT_TOKEN: ${{ secrets.SLACK_TOKEN }}
@@ -29,7 +29,7 @@ jobs:
           channel: ${{ inputs.SLACK_CHANNEL }}
           status: SUCCESS
           color: good
-      - name: Slack Deployment Notify Failure
+      - name: Notify Failure
         if: ${{ inputs.PREVIOUS_RESULT == 'failure' }}
         env:
           SLACK_BOT_TOKEN: ${{ secrets.SLACK_TOKEN }}

@@ -2,10 +2,23 @@ name: Notify Deploy
 
 on:
   workflow_call:
+    secrets:
+      SLACK_TOKEN:
+        description: 'Slack Token'
+        required: false
+      NR_API_KEY:
+        description: 'New Relic API KEY'
+        required: false
+      NR_ACCOUNT_ID:
+        description: 'New Relic account ID'
+        required: false
+      VELOCITY_TOKEN:
+        description: 'Velocity Token'
+        required: false
     inputs:
       PREVIOUS_RESULT:
         description: 'Result from previous job(s)'
-        required: false
+        required: true
         type: string
       SLACK_CHANNEL:
         description: 'Slack channel to notify'
@@ -16,44 +29,31 @@ on:
         required: false
         type: string
       ENVIRONMENT:
-        description: 'Environment of deployed app'
-        default: nil
+        description: 'Environment of deployed app (for velocity)'
         required: false
         type: string
       DESCRIPTION:
         description: 'Description of deployed version'
-        default: nil
         required: false
         type: string
         
 jobs:
   slack:
-    uses: aegro/infra-github-actions/.github/workflows/notify-deploy_slack.yml@dev
+    uses: ./.github/workflows/notify-deploy_slack.yml
     secrets: inherit
     with:
       PREVIOUS_RESULT: ${{ inputs.PREVIOUS_RESULT }}
       SLACK_CHANNEL: updates_teste-thomas
   new-relic:
-    runs-on: ubuntu-latest
-    if: ${{ inputs.PREVIOUS_RESULT != 'failure' }}
-    steps:
-      - name: New Relic Deployment Notify
-        uses: newrelic/deployment-marker-action@v1.0.0
-        with:
-          apiKey: ${{ secrets.NR_API_KEY }}
-          accountId: ${{ secrets.NR_ACCOUNT_ID }}
-          applicationId: ${{ inputs.NR_APP_ID }}
-          revision: ${{ github.sha }}
-          description: ${{ inputs.DESCRIPTION }}
+    if: ${{ inputs.PREVIOUS_RESULT != 'failure' && inputs.NR_APP_ID != '' }}
+    uses: ./.github/workflows/notify-deploy_NR.yml
+    secrets: inherit
+    with:
+      NR_APP_ID: ${{ inputs.NR_APP_ID }}
+      DESCRIPTION: ${{ inputs.DESCRIPTION }}
   velocity:
-    runs-on: ubuntu-latest
-    if: ${{ inputs.PREVIOUS_RESULT != 'failure' }}
-    steps:
-      - name: Velocity Deployment Notify
-        run: |
-            curl --fail https://velocity.codeclimate.com/deploys \
-            -d "token=${{ secrets.VELOCITY_TOKEN }}" \
-            -d "repository_url=${{ github.server_url }}/${{ github.repository }}" \
-            -d "environment=${{ inputs.ENVIRONMENT }}" \
-            -d "revision=${{ github.sha }}" \
-            -d "version=${{ github.sha }}"
+    if: ${{ inputs.PREVIOUS_RESULT != 'failure' && inputs.ENVIRONMENT != '' }}
+    uses: ./.github/workflows/notify-deploy_velocity.yml
+    secrets: inherit
+    with:
+      ENVIRONMENT: ${{ inputs.ENVIRONMENT }}
