@@ -9,11 +9,11 @@ on:
     inputs:
       ENVIRONMENT:
         description: 'Environment of deployed app'
-        required: false
+        required: true
         type: string
         
 jobs:
-  notify:
+  velocity:
     runs-on: ubuntu-latest
     steps:
       - name: Velocity Deployment Notify

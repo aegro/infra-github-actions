@@ -20,7 +20,7 @@ on:
         type: string
         
 jobs:
-  notify:
+  new-relic:
     runs-on: ubuntu-latest
     steps:
       - name: New Relic Deployment Notify

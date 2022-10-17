@@ -17,7 +17,7 @@ on:
         type: string
         
 jobs:
-  notify:
+  slack:
     runs-on: ubuntu-latest
     steps:
       - name: Notify Success

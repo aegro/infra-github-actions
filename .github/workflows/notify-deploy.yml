@@ -38,20 +38,20 @@ on:
         type: string
         
 jobs:
-  slack:
+  notify-slack:
     uses: ./.github/workflows/notify-deploy_slack.yml
     secrets: inherit
     with:
       PREVIOUS_RESULT: ${{ inputs.PREVIOUS_RESULT }}
       SLACK_CHANNEL: updates_teste-thomas
-  new-relic:
+  notify-nr:
     if: ${{ inputs.PREVIOUS_RESULT != 'failure' && inputs.NR_APP_ID != '' }}
     uses: ./.github/workflows/notify-deploy_NR.yml
     secrets: inherit
     with:
       NR_APP_ID: ${{ inputs.NR_APP_ID }}
       DESCRIPTION: ${{ inputs.DESCRIPTION }}
-  velocity:
+  notify-velocity:
     if: ${{ inputs.PREVIOUS_RESULT != 'failure' && inputs.ENVIRONMENT != '' }}
     uses: ./.github/workflows/notify-deploy_velocity.yml
     secrets: inherit
