@@ -1,0 +1,40 @@
+name: Notify Deploy
+
+on:
+  workflow_call:
+    secrets:
+      SLACK_TOKEN:
+        description: 'Slack Token'
+        required: false
+    inputs:
+      PREVIOUS_RESULT:
+        description: 'Result from previous job(s)'
+        required: false
+        type: string
+      SLACK_CHANNEL:
+        description: 'Slack channel to notify'
+        required: false
+        type: string
+        
+jobs:
+  slack:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Slack Deployment Notify Success
+        if: ${{ inputs.PREVIOUS_RESULT != 'failure' }}
+        env:
+          SLACK_BOT_TOKEN: ${{ secrets.SLACK_TOKEN }}
+        uses: voxmedia/github-action-slack-notify-build@v1
+        with:
+          channel: ${{ inputs.SLACK_CHANNEL }}
+          status: SUCCESS
+          color: good
+      - name: Slack Deployment Notify Failure
+        if: ${{ inputs.PREVIOUS_RESULT == 'failure' }}
+        env:
+          SLACK_BOT_TOKEN: ${{ secrets.SLACK_TOKEN }}
+        uses: voxmedia/github-action-slack-notify-build@v1
+        with:
+          channel: ${{ inputs.SLACK_CHANNEL }}
+          status: FAILED
+          color: danger
