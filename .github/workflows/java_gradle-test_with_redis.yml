@@ -39,7 +39,7 @@ jobs:
         run: ./gradlew jacocoTestReport --parallel
       - uses: actions/upload-artifact@v3
         with:
-          name: Package
+          name: coverage_report
           path: |
             build/classes/**
             build/reports/**
