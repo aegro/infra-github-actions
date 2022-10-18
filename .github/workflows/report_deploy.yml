@@ -1,8 +1,8 @@
-# Notify deployment to our main monitoring tools
+# Reports deployment to our main monitoring tools
 # To ignore slack, don't pass slack_channel
 # To ignore new relic, don't pass nr_app_id
 # To ignore velocity, don't pass environment
-name: Notify Deploy
+name: Report Deploy
 
 on:
   workflow_call:
@@ -25,7 +25,7 @@ on:
         required: true
         type: string
       SLACK_CHANNEL:
-        description: 'Slack channel to notify'
+        description: 'Slack channel to report'
         required: false
         type: string
       NR_APP_ID:
@@ -44,21 +44,21 @@ on:
 jobs:
   slack:
     if: ${{ inputs.SLACK_CHANNEL != '' }}
-    uses: ./.github/workflows/notify-deploy_slack.yml
+    uses: ./.github/workflows/report_deploy-slack.yml
     secrets: inherit
     with:
       PREVIOUS_RESULT: ${{ inputs.PREVIOUS_RESULT }}
       SLACK_CHANNEL: ${{ inputs.SLACK_CHANNEL }}
   new-relic:
     if: ${{ inputs.PREVIOUS_RESULT != 'failure' && inputs.NR_APP_ID != '' }}
-    uses: ./.github/workflows/notify-deploy_NR.yml
+    uses: ./.github/workflows/report_deploy-NR.yml
     secrets: inherit
     with:
       NR_APP_ID: ${{ inputs.NR_APP_ID }}
       DESCRIPTION: ${{ inputs.DESCRIPTION }}
   velocity:
     if: ${{ inputs.PREVIOUS_RESULT != 'failure' && inputs.ENVIRONMENT != '' }}
-    uses: ./.github/workflows/notify-deploy_velocity.yml
+    uses: ./.github/workflows/report_deploy-velocity.yml
     secrets: inherit
     with:
       ENVIRONMENT: ${{ inputs.ENVIRONMENT }}

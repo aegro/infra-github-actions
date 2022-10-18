@@ -1,5 +1,5 @@
-# Notify deployment to slack (even in case of failure)
-name: Notify Deploy
+# Reports deployment to slack (even in case of failure)
+name: Report Deploy
 
 on:
   workflow_call:
@@ -13,7 +13,7 @@ on:
         required: true
         type: string
       SLACK_CHANNEL:
-        description: 'Slack channel to notify'
+        description: 'Slack channel to report'
         required: true
         type: string
         
@@ -21,7 +21,7 @@ jobs:
   slack:
     runs-on: ubuntu-latest
     steps:
-      - name: Notify Success
+      - name: Report Success
         if: ${{ inputs.PREVIOUS_RESULT != 'failure' }}
         env:
           SLACK_BOT_TOKEN: ${{ secrets.SLACK_TOKEN }}
@@ -30,7 +30,7 @@ jobs:
           channel: ${{ inputs.SLACK_CHANNEL }}
           status: SUCCESS
           color: good
-      - name: Notify Failure
+      - name: Report Failure
         if: ${{ inputs.PREVIOUS_RESULT == 'failure' }}
         env:
           SLACK_BOT_TOKEN: ${{ secrets.SLACK_TOKEN }}

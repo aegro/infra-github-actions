@@ -1,5 +1,5 @@
-# Notify deployment info to new relic
-name: Notify Deploy
+# Reports deployment info to new relic
+name: Report Deploy
 
 on:
   workflow_call:
@@ -24,7 +24,7 @@ jobs:
   new-relic:
     runs-on: ubuntu-latest
     steps:
-      - name: New Relic Deployment Notify
+      - name: New Relic Deployment Report
         uses: newrelic/deployment-marker-action@v1.0.0
         with:
           apiKey: ${{ secrets.NR_API_KEY }}

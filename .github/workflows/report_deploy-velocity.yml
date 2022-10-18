@@ -1,5 +1,5 @@
-# Notify deployment info to (code climate's) velocity
-name: Notify Deploy
+# Reports deployment info to (code climate's) velocity
+name: Report Deploy
 
 on:
   workflow_call:
@@ -17,7 +17,7 @@ jobs:
   velocity:
     runs-on: ubuntu-latest
     steps:
-      - name: Velocity Deployment Notify
+      - name: Velocity Deployment Report
         run: |
             curl --fail https://velocity.codeclimate.com/deploys \
             -d "token=${{ secrets.VELOCITY_TOKEN }}" \
