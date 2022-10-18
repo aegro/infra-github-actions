@@ -16,7 +16,7 @@ on:
         default: 'adopt'
 
 jobs:
-  build:
+  build-war:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v3
