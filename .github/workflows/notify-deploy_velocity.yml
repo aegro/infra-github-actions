@@ -1,3 +1,4 @@
+# Notify deployment info to (code climate's) velocity
 name: Notify Deploy
 
 on:

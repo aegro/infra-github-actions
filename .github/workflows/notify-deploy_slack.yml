@@ -1,3 +1,4 @@
+# Notify deployment to slack (even in case of failure)
 name: Notify Deploy
 
 on:

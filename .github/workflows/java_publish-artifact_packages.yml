@@ -1,5 +1,4 @@
 # Builds a package using Maven and then publishes it to GitHub packages
-
 name: Publish Java Artifact
 
 on:
