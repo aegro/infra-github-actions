@@ -8,6 +8,29 @@ on:
         description: 'Sonar Token'
         required: true
     inputs:
+      SONAR_URL:
+        description: 'Sonar Host Url'
+        required: false
+        type: string
+        default: 'https://sonarcloud.io'
+      SONAR_ORGANIZATION:
+        description: 'Sonar organization'
+        required: false
+        type: string
+        default: 'aegro'
+      SONAR_SOURCE_ENCODING:
+        description: 'Sonar source encoding'
+        required: false
+        type: string
+        default: 'UTF-8'
+      SONAR_PROJECT_KEY:
+        description: 'Sonar project key'
+        required: false
+        type: string
+      SONAR_PROJECT_NAME:
+        description: 'Sonar project name'
+        required: false
+        type: string
       JAVA_VERSION:
         description: 'Java version'
         required: false
@@ -36,4 +59,8 @@ jobs:
         with:
           name: coverage_report
       - name: Run Sonar Analysis
-        run: ./gradlew sonarqube -Dsonar.login="${{ secrets.SONAR_TOKEN }}" -x compileJava -x compileTestJava --parallel
+        run: |
+          ./gradlew sonarqube -x compileJava -x compileTestJava --parallel
+            -Dsonar.login=${{ secrets.SONAR_TOKEN }}
+            -Dsonar.organization=${{ inputs.SONAR_ORGANIZATION }}
+            -Dsonar.projectKey=${{ inputs.SONAR_PROJECT_KEY }}
