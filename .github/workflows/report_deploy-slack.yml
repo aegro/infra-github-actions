@@ -22,7 +22,7 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Report Success
-        if: ${{ inputs.FAILURE }}
+        if: ${{ !inputs.FAILURE }}
         env:
           SLACK_BOT_TOKEN: ${{ secrets.SLACK_TOKEN }}
         uses: voxmedia/github-action-slack-notify-build@v1
@@ -31,7 +31,7 @@ jobs:
           status: SUCCESS
           color: good
       - name: Report Failure
-        if: ${{ !inputs.FAILURE }}
+        if: ${{ inputs.FAILURE }}
         env:
           SLACK_BOT_TOKEN: ${{ secrets.SLACK_TOKEN }}
         uses: voxmedia/github-action-slack-notify-build@v1
