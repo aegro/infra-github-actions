@@ -20,10 +20,10 @@ on:
         description: 'Velocity Token'
         required: false
     inputs:
-      PREVIOUS_RESULT:
-        description: 'Result from previous job(s)'
+      FAILURE:
+        description: 'Indicates if previous job(s) failed'
         required: true
-        type: string
+        type: boolean
       SLACK_CHANNEL:
         description: 'Slack channel to report'
         required: false
@@ -47,17 +47,17 @@ jobs:
     uses: ./.github/workflows/report_deploy-slack.yml
     secrets: inherit
     with:
-      PREVIOUS_RESULT: ${{ inputs.PREVIOUS_RESULT }}
+      FAILURE: ${{ inputs.FAILURE }}
       SLACK_CHANNEL: ${{ inputs.SLACK_CHANNEL }}
   new-relic:
-    if: ${{ inputs.PREVIOUS_RESULT != 'failure' && inputs.NR_APP_ID != '' }}
+    if: ${{ !inputs.FAILURE && inputs.NR_APP_ID != '' }}
     uses: ./.github/workflows/report_deploy-NR.yml
     secrets: inherit
     with:
       NR_APP_ID: ${{ inputs.NR_APP_ID }}
       DESCRIPTION: ${{ inputs.DESCRIPTION }}
   velocity:
-    if: ${{ inputs.PREVIOUS_RESULT != 'failure' && inputs.ENVIRONMENT != '' }}
+    if: ${{ !inputs.FAILURE && inputs.ENVIRONMENT != '' }}
     uses: ./.github/workflows/report_deploy-velocity.yml
     secrets: inherit
     with:

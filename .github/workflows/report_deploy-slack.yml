@@ -8,10 +8,10 @@ on:
         description: 'Slack Token'
         required: true
     inputs:
-      PREVIOUS_RESULT:
-        description: 'Result from previous job(s)'
+      FAILURE:
+        description: 'Indicates if previous job(s) failed'
         required: true
-        type: string
+        type: boolean
       SLACK_CHANNEL:
         description: 'Slack channel to report'
         required: true
@@ -22,7 +22,7 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Report Success
-        if: ${{ inputs.PREVIOUS_RESULT != 'failure' }}
+        if: ${{ inputs.FAILURE }}
         env:
           SLACK_BOT_TOKEN: ${{ secrets.SLACK_TOKEN }}
         uses: voxmedia/github-action-slack-notify-build@v1
@@ -31,7 +31,7 @@ jobs:
           status: SUCCESS
           color: good
       - name: Report Failure
-        if: ${{ inputs.PREVIOUS_RESULT == 'failure' }}
+        if: ${{ !inputs.FAILURE }}
         env:
           SLACK_BOT_TOKEN: ${{ secrets.SLACK_TOKEN }}
         uses: voxmedia/github-action-slack-notify-build@v1
