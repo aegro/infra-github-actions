@@ -1,0 +1,37 @@
+# K8s manifests updade
+name: Manifests updade image
+
+on:
+  workflow_call:
+    inputs:
+      REPO:
+        description: 'ECR repository name'
+        required: true
+        type: string
+      SERVICE_NAME:
+        description: 'Service name'
+        required: true
+        type: string
+      ENV-MANIFEST-FILE:
+        description: 'Environment'
+        required: true
+        type: string
+
+jobs:
+  update-image-manifest:
+    runs-on: ubuntu-latest
+    name: Update manifests
+    steps:
+      - uses: actions/checkout@v3
+      - name: Download artifact
+        uses: actions/download-artifact@v3
+        with:
+          name: docker-tag
+      - run: |
+          TIMESTAMP="$(cat job.output | awk 'NR==1')"
+          sed -i "s/${{ inputs.REPO }}:.*/${{ inputs.REPO }}:${TIMESTAMP}/g" k8s-deploy/${{inputs.SERVICE_NAME}}/values-${{inputs.ENV-MANIFEST-FILE}}.yaml
+          git add k8s-deploy/${{inputs.SERVICE_NAME}}/values-${{inputs.ENV-MANIFEST-FILE}}.yaml
+          git config user.name "Plataforma"
+          git config user.email devplatform@aegro.com.br
+          git commit -m "[skip ci] Update manifests"
+          git push origin ${GITHUB_REF_NAME}
