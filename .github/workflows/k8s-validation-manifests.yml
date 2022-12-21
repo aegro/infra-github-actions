@@ -1,0 +1,31 @@
+# K8s manifests validation
+name: K8S manifests validation
+
+on:
+  workflow_call:
+    inputs:
+      SERVICE_NAME:
+        description: 'Service name'
+        required: true
+        type: string
+      ENV-MANIFEST-FILE:
+        description: 'Environment'
+        required: true
+        type: string
+
+jobs:
+  k8s-manifests-validation:
+    runs-on: ubuntu-latest
+    name: k8s manifests validation
+    steps:
+      - uses: actions/checkout@v3
+      - name: Validate manifests
+        uses: stefanprodan/kube-tools@v1
+        with:
+          helmv3: 3.7.2
+          kubeval: v0.16.1
+          kubeconform: 0.4.12
+          command: |
+            SERVICE_NAME="$(echo ${GITHUB_REPOSITORY} | cut -d'/' -f2)"
+            echo "Running kubeconform..."
+            helmv3 template ./k8s-deploy/${{inputs.SERVICE_NAME}} -f ./k8s-deploy/${{inputs.SERVICE_NAME}}/values-${{ inputs.ENV-MANIFEST-FILE }}.yaml | kubeconform -summary -strict -ignore-missing-schemas
