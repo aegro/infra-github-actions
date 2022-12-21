@@ -36,6 +36,8 @@ git tag -a v1.1.0 -m "Aegro workflows - add k8s actions"      # criar a tag com 
 git push origin production --tags                             # Enviar a tag     
 ```
 
+[**É importante que sejam criadas as releases informando o que foi alterado na versão.**](https://docs.github.com/pt/repositories/releasing-projects-on-github/managing-releases-in-a-repository)
+
 ## Contribuindo
 Para contribuir, adicione seu workflow em /.github/workflows e abra uma PR para a branch _dev_, faça os testes nessa branch e quando estiver validado, passe o seu worflow para a branch _production_.
 * Antes de incluir um novo workflow, avalie os existentes para se certificar de que não deveria melhorar um deles ao invés de incluir um novo.
