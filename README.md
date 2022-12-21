@@ -7,7 +7,7 @@ Actions reusáveis para projetos Aegro.
 
 O nome das actions é composto pelos seguintes componentes (entre [ ])
 
->[linguagem/framework?]-[ação]-[ambiente/ferramenta/tecnologia?]
+>[linguagem/framework_de_programação?]-[ação_separado_por_underscores]-[ambiente/ferramenta/tecnologia?]
 
 * O símbolo '?' indica que o componente é opcional
 * Utilize underscores quando há mais de uma palavra no mesmo componente
