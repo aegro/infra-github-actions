@@ -16,7 +16,7 @@ on:
         default: 'adopt'
 
 jobs:
-  test-with-redis:
+  test-with-mongo:
     runs-on: ubuntu-latest
     services:
       mongodb:
