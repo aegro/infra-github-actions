@@ -41,6 +41,8 @@ jobs:
           restore-keys: ${{ runner.os }}-gradle
       - name: Run Tests
         run: ./gradlew test --stacktrace --parallel
+      - name: Generate Jacoco Report
+        run: ./gradlew jacocoTestReport --parallel
       - uses: actions/upload-artifact@v3
         with:
           name: coverage_report
