@@ -73,4 +73,4 @@ jobs:
           path: build/
       - name: Run Sonar Analysis
         run: |
-          ./gradlew sonarqube -x compileJava -x compileTestJava -Dsonar.host.url=${{ inputs.SONAR_URL }} -Dsonar.projectKey=${{ inputs.SONAR_PROJECT_KEY }} -Dsonar.login=${{ secrets.SONAR_TOKEN }} -Dsonar.organization=${{ inputs.SONAR_ORGANIZATION }} --parallel --stacktrace --info
+          ./gradlew sonarqube -x compileJava -x compileTestJava -Dsonar.host.url=${{ inputs.SONAR_URL }} -Dsonar.projectKey=${{ inputs.SONAR_PROJECT_KEY }} -Dsonar.login=${{ secrets.SONAR_TOKEN }} -Dsonar.projectName=${{ inputs.SONAR_PROJECT_NAME }} -Dsonar.organization=${{ inputs.SONAR_ORGANIZATION }} --parallel --stacktrace --info
