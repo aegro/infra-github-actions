@@ -15,7 +15,6 @@ on:
 
 jobs:
   update-image-manifest:
-    needs: docker-build_image-k8s
     runs-on: ubuntu-latest
     name: Update manifests
     steps:
