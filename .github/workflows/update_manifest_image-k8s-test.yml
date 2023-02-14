@@ -12,10 +12,6 @@ on:
         description: 'Service name'
         required: true
         type: string
-      ENV-MANIFEST-FILE:
-        description: 'Environment'
-        required: true
-        type: string
 
 jobs:
   update-image-manifest:
