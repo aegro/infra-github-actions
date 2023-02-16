@@ -75,6 +75,7 @@ jobs:
           args: unzip -qq coverage_report.zip -d build
       - name: teste
         run: |
+          pwd
           ls
           ls build
           du -a
