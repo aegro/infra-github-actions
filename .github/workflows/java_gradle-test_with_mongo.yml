@@ -43,9 +43,9 @@ jobs:
         run: ./gradlew test --stacktrace --parallel
       - name: Generate Jacoco Report
         run: ./gradlew jacocoTestReport --parallel
-      - name: Tar files
-        run: zip -r coverage_report.zip build/classes/ build/reports/
       - uses: actions/upload-artifact@v3
         with:
           name: coverage_report
-          path: coverage_report.zip
+          path: |
+            build/classes/**
+            build/reports/**
