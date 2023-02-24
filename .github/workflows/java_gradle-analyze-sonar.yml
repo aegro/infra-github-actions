@@ -70,7 +70,9 @@ jobs:
       - uses: actions/download-artifact@v2
         with:
           name: coverage_report
-          path: build/
+      - uses: montudor/action-zip@v1
+        with:
+          args: unzip -qq coverage_report.zip -d build
       - name: Run Sonar Analysis
         run: |
           ./gradlew sonarqube -x compileJava -x compileTestJava -Dsonar.host.url=${{ inputs.SONAR_URL }} -Dsonar.projectKey=${{ inputs.SONAR_PROJECT_KEY }} -Dsonar.login=${{ secrets.SONAR_TOKEN }} -Dsonar.projectName=${{ inputs.SONAR_PROJECT_NAME }} -Dsonar.organization=${{ inputs.SONAR_ORGANIZATION }} --parallel --stacktrace --info
