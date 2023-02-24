@@ -20,10 +20,6 @@ on:
         description: 'Artifact name'
         required: true
         type: string
-      NEWRELIC-APP-NAME:
-        description: 'Newrelic app name'
-        required: true
-        type: string
       DOCKERFILE:
         description: 'Dockerfile path'
         required: false
@@ -61,7 +57,7 @@ jobs:
           echo ${TAG} > job.output
           ECR_REPO=${{ inputs.REPO }}
           echo ${ECR_REPO} >> job.output
-          docker image build . --file ${{ inputs.DOCKERFILE }} --build-arg ENV_BUILD=${{ inputs.ENV }} --build-arg NEW_RELIC_APP_NAME=${{ inputs.NEWRELIC-APP-NAME }} --build-arg NEW_RELIC_LICENSE_KEY=${{ secrets.NEW_RELIC_LICENSE_KEY }}  --tag ${ECR_REGISTRY}/${ECR_REPO}:${TAG}
+          docker image build . --file ${{ inputs.DOCKERFILE }} --build-arg ENV_BUILD=${{ inputs.ENV }} --tag ${ECR_REGISTRY}/${ECR_REPO}:${TAG}
           docker image push ${ECR_REGISTRY}/${ECR_REPO}:${TAG}
       - uses: actions/upload-artifact@v3
         with:
