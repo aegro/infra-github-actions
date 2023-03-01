@@ -46,6 +46,10 @@ jobs:
         uses: actions/download-artifact@v3
         with:
           name: ${{ inputs.ARTIFACT }}
+      - name: teste
+        run: |
+          ls
+          du -h
       - name: Docker build and push
         env:
           ECR_REGISTRY: ${{ steps.login-ecr.outputs.registry }}
