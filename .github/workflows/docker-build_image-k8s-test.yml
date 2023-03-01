@@ -25,6 +25,11 @@ on:
         required: false
         type: string
         default: './k8s-deploy/docker/Dockerfile'
+      ARTI_PATH:
+        description: 'Artifact path'
+        required: false
+        type: string
+        default: '.'
 
 jobs:
   build-docker-image:
@@ -46,6 +51,7 @@ jobs:
         uses: actions/download-artifact@v3
         with:
           name: ${{ inputs.ARTIFACT }}
+          path: ${{ inputs.ARTI_PATH }}
       - name: Docker build and push
         env:
           ECR_REGISTRY: ${{ steps.login-ecr.outputs.registry }}
