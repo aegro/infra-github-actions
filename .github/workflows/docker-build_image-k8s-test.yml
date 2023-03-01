@@ -52,11 +52,6 @@ jobs:
         with:
           name: ${{ inputs.ARTIFACT }}
           path: ${{ inputs.ARTI_PATH }}
-      - name: teste
-        run: |
-          ls
-          du -h
-          ls dist/apps/aegroweb
       - name: Docker build and push
         env:
           ECR_REGISTRY: ${{ steps.login-ecr.outputs.registry }}
