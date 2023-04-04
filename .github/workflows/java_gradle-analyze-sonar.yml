@@ -67,7 +67,7 @@ jobs:
           path: ~/.gradle/caches
           key: ${{ runner.os }}-gradle-${{ hashFiles('**/*.gradle') }}
           restore-keys: ${{ runner.os }}-gradle
-      - name: Create build directorie
+      - name: Create build directory
         run: |
           mkdir -p build/sonar
       - uses: actions/download-artifact@v2
