@@ -13,9 +13,6 @@ on:
       NR_API_KEY:
         description: 'New Relic API KEY'
         required: false
-      NR_ACCOUNT_ID:
-        description: 'New Relic account ID'
-        required: false
       VELOCITY_TOKEN:
         description: 'Velocity Token'
         required: false
@@ -28,12 +25,16 @@ on:
         description: 'Slack channel to report'
         required: false
         type: string
-      NR_APP_ID:
-        description: 'New Relic application ID'
+      NR_ENTITY_GUID:
+        description: 'New Relic entity GUID'
         required: false
         type: string
       ENVIRONMENT:
         description: 'Environment of deployed app (for velocity)'
+        required: false
+        type: string
+      VERSION:
+        description: 'Version of deployed app'
         required: false
         type: string
       DESCRIPTION:
@@ -50,11 +51,12 @@ jobs:
       FAILURE: ${{ inputs.FAILURE }}
       SLACK_CHANNEL: ${{ inputs.SLACK_CHANNEL }}
   new-relic:
-    if: ${{ !inputs.FAILURE && inputs.NR_APP_ID != '' }}
+    if: ${{ !inputs.FAILURE && inputs.NR_ENTITY_GUID != '' }}
     uses: ./.github/workflows/report_deploy-NR.yml
     secrets: inherit
     with:
-      NR_APP_ID: ${{ inputs.NR_APP_ID }}
+      NR_ENTITY_GUID: ${{ inputs.NR_ENTITY_GUID }}
+      VERSION: ${{ inputs.VERSION }}
       DESCRIPTION: ${{ inputs.DESCRIPTION }}
   velocity:
     if: ${{ !inputs.FAILURE && inputs.ENVIRONMENT != '' }}

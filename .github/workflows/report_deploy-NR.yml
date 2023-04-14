@@ -7,13 +7,14 @@ on:
       NR_API_KEY:
         description: 'New Relic API KEY'
         required: true
-      NR_ACCOUNT_ID:
-        description: 'New Relic account ID'
-        required: true
     inputs:
-      NR_APP_ID:
-        description: 'New Relic application ID'
+      NR_ENTITY_GUID:
+        description: 'New Relic entity GUID'
         required: true
+        type: string
+      VERSION:
+        description: 'Version of deployed app'
+        required: false
         type: string
       DESCRIPTION:
         description: 'Description of deployed version'
@@ -25,10 +26,9 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: New Relic Deployment Report
-        uses: newrelic/deployment-marker-action@v1.0.0
+        uses: newrelic/deployment-marker-action@v2.2.0
         with:
           apiKey: ${{ secrets.NR_API_KEY }}
-          accountId: ${{ secrets.NR_ACCOUNT_ID }}
-          applicationId: ${{ inputs.NR_APP_ID }}
-          revision: ${{ github.sha }}
+          guid: ${{ inputs.NR_ENTITY_GUID }}
+          version: ${{ inputs.VERSION || inputs.github.sha }}
           description: ${{ inputs.DESCRIPTION }}
