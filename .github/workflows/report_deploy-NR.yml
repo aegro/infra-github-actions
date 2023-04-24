@@ -30,5 +30,5 @@ jobs:
         with:
           apiKey: ${{ secrets.NR_API_KEY }}
           guid: ${{ inputs.NR_ENTITY_GUID }}
-          version: ${{ inputs.VERSION || inputs.github.sha }}
+          version: ${{ inputs.VERSION && inputs.VERSION || inputs.github.sha }}
           description: ${{ inputs.DESCRIPTION }}
