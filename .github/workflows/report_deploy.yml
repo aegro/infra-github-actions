@@ -56,7 +56,6 @@ jobs:
     secrets: inherit
     with:
       NR_ENTITY_GUID: ${{ inputs.NR_ENTITY_GUID }}
-      VERSION: ${{ inputs.VERSION }}
       DESCRIPTION: ${{ inputs.DESCRIPTION }}
   velocity:
     if: ${{ !inputs.FAILURE && inputs.ENVIRONMENT != '' }}
