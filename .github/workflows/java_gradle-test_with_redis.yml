@@ -17,7 +17,7 @@ on:
       TIMEOUT:
         required: false
         type: number
-        default: 20
+        default: 30
 
 jobs:
   test-with-redis:
