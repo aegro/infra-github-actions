@@ -24,7 +24,7 @@ on:
       TIMEOUT:
         required: false
         type: number
-        default: 5 
+        default: 5
 
 jobs:
   new-relic:
