@@ -14,10 +14,15 @@ on:
         required: false
         type: string
         default: 'adopt'
+      TIMEOUT:
+        required: false
+        type: number
+        default: 20
 
 jobs:
   test-with-redis:
     runs-on: ubuntu-latest
+    timeout-minutes: ${{ inputs.TIMEOUT }}
     services:
       redis:
         image: redis
