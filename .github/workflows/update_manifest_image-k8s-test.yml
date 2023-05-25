@@ -30,7 +30,7 @@ jobs:
           echo ${TEAM}
           sed -i "s/${{ inputs.REPO }}:.*/${{ inputs.REPO }}:${TIMESTAMP}/g" k8s-deploy/${{inputs.SERVICE_NAME}}/values-${TEAM}-test.yaml
           git add k8s-deploy/${{inputs.SERVICE_NAME}}/values-${TEAM}-test.yaml
-          git config user.name "Plataforma"
-          git config user.email devplatform@aegro.com.br
+          git config user.name "aegro-github-bot"
+          git config user.email github@aegro.com.br
           git commit -m "[skip ci] Update manifests"
           git push origin ${GITHUB_REF_NAME}
