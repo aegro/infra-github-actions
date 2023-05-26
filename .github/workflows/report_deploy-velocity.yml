@@ -12,10 +12,15 @@ on:
         description: 'Environment of deployed app'
         required: true
         type: string
-        
+      TIMEOUT:
+        required: false
+        type: number
+        default: 5
+              
 jobs:
   velocity:
     runs-on: ubuntu-latest
+    timeout-minutes: ${{ inputs.TIMEOUT }}
     steps:
       - name: Velocity Deployment Report
         run: |

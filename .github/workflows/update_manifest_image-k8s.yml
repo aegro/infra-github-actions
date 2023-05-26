@@ -16,10 +16,15 @@ on:
         description: 'Environment'
         required: true
         type: string
+      TIMEOUT:
+        required: false
+        type: number
+        default: 5
 
 jobs:
   update-image-manifest:
     runs-on: ubuntu-latest
+    timeout-minutes: ${{ inputs.TIMEOUT }}
     name: Update manifests
     steps:
       - uses: actions/checkout@v3
@@ -31,7 +36,7 @@ jobs:
           TIMESTAMP="$(cat job.output | awk 'NR==1')"
           sed -i "s/${{ inputs.REPO }}:.*/${{ inputs.REPO }}:${TIMESTAMP}/g" k8s-deploy/${{inputs.SERVICE_NAME}}/values-${{inputs.ENV-MANIFEST-FILE}}.yaml
           git add k8s-deploy/${{inputs.SERVICE_NAME}}/values-${{inputs.ENV-MANIFEST-FILE}}.yaml
-          git config user.name "Plataforma"
-          git config user.email devplatform@aegro.com.br
+          git config user.name "aegro-github-bot"
+          git config user.email github@aegro.com.br
           git commit -m "[skip ci] Update manifests"
           git push origin ${GITHUB_REF_NAME}

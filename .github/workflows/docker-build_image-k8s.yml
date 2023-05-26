@@ -34,10 +34,15 @@ on:
         required: false
         type: string
         default: '.'
+      TIMEOUT:
+        required: false
+        type: number
+        default: 10
 
 jobs:
   build-docker-image:
     runs-on: ubuntu-latest
+    timeout-minutes: ${{ inputs.TIMEOUT }}
     name: Docker Image
     environment: ${{ inputs.GIT-ENV }}
     steps:

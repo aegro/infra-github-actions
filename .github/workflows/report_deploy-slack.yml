@@ -16,10 +16,15 @@ on:
         description: 'Slack channel to report'
         required: true
         type: string
-        
+      TIMEOUT:
+        required: false
+        type: number
+        default: 5
+                
 jobs:
   slack:
     runs-on: ubuntu-latest
+    timeout-minutes: ${{ inputs.TIMEOUT }}
     steps:
       - name: Report Success
         if: ${{ !inputs.FAILURE }}
