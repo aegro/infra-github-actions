@@ -12,11 +12,16 @@ on:
         description: 'Service name'
         required: true
         type: string
+      TIMEOUT:
+        required: false
+        type: number
+        default: 5
 
 jobs:
   update-image-manifest:
     environment: staging
     runs-on: ubuntu-latest
+    timeout-minutes: ${{ inputs.TIMEOUT }}
     name: Update manifests
     steps:
       - uses: actions/checkout@v3
