@@ -14,10 +14,15 @@ on:
         required: false
         type: string
         default: 'adopt'
+      TIMEOUT:
+        required: false
+        type: number
+        default: 15
 
 jobs:
   build-war:
     runs-on: ubuntu-latest
+    timeout-minutes: ${{ inputs.TIMEOUT }}
     steps:
       - uses: actions/checkout@v3
       - uses: actions/setup-java@v3

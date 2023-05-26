@@ -21,10 +21,15 @@ on:
         description: 'Description of deployed version'
         required: false
         type: string
-        
+      TIMEOUT:
+        required: false
+        type: number
+        default: 5
+
 jobs:
   new-relic:
     runs-on: ubuntu-latest
+    timeout-minutes: ${{ inputs.TIMEOUT }}
     steps:
       - name: New Relic Deployment Report
         uses: newrelic/deployment-marker-action@v2.2.0
