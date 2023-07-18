@@ -20,7 +20,7 @@ on:
         default: 30
       TEST-ENV:
         description: 'Test Environment'
-        required: true
+        required: false
         type: string
         default: 'test'
 
