@@ -18,9 +18,15 @@ on:
         required: false
         type: number
         default: 30
+      TEST-ENV:
+        description: 'Test Environment'
+        required: true
+        type: string
+        default: 'test'
 
 jobs:
   test-with-redis:
+    environment: ${{ inputs.TEST-ENV }}
     runs-on: ubuntu-latest
     timeout-minutes: ${{ inputs.TIMEOUT }}
     services:
