@@ -48,9 +48,12 @@ jobs:
         run: ./gradlew test --stacktrace --parallel
       - name: Generate Jacoco Report
         run: ./gradlew jacocoTestReport --parallel
+        if: always()
       - name: Tar files
         run: cd build && zip -r $OLDPWD/coverage_report.zip classes/ reports/
+        if: always()
       - uses: actions/upload-artifact@v3
         with:
           name: coverage_report
           path: coverage_report.zip
+        if: always()
