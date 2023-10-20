@@ -82,5 +82,12 @@ jobs:
         with:
           args: unzip -qq coverage_report.zip -d build
       - name: Run Sonar Analysis
-        run: |
-          ./gradlew sonarqube -x compileJava -x compileTestJava -Dsonar.host.url=${{ inputs.SONAR_URL }} -Dsonar.projectKey=${{ inputs.SONAR_PROJECT_KEY }} -Dsonar.login=${{ secrets.SONAR_TOKEN }} -Dsonar.projectName=${{ inputs.SONAR_PROJECT_NAME }} -Dsonar.organization=${{ inputs.SONAR_ORGANIZATION }} --parallel --stacktrace --info
+        run: >
+          ./gradlew sonarqube 
+          -x compileJava -x compileTestJava 
+          --parallel --stacktrace --info 
+          -Dsonar.host.url=${{ inputs.SONAR_URL }} 
+          -Dsonar.organization=${{ inputs.SONAR_ORGANIZATION }}
+          -Dsonar.token=${{ secrets.SONAR_TOKEN }} 
+          -Dsonar.projectKey=${{ inputs.SONAR_PROJECT_KEY }} 
+          -Dsonar.projectName=${{ inputs.SONAR_PROJECT_NAME }}
