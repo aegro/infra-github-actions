@@ -82,7 +82,7 @@ jobs:
         with:
           args: unzip -qq coverage_report.zip -d build
       - name: Run Sonar Analysis
-        run: |
+        run: >
           ./gradlew sonarqube 
           -x compileJava -x compileTestJava 
           --parallel --stacktrace --info 
