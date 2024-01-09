@@ -1,5 +1,5 @@
-# Runs java application tests with redis service using gradle
-name: Test Java with Redis using Gradle
+# Runs java application tests using gradle
+name: Test Java using Gradle
 
 on:
   workflow_call:
