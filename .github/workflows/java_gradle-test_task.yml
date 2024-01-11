@@ -1,0 +1,57 @@
+# Runs java application tests using gradle
+name: Test task customize Java using Gradle
+
+on:
+  workflow_call:
+    inputs:
+      JAVA_VERSION:
+        description: 'Java version'
+        required: false
+        type: string
+        default: '16'
+      JAVA_DISTRIBUTION:
+        description: 'Java distribution'
+        required: false
+        type: string
+        default: 'adopt'
+      TIMEOUT:
+        required: false
+        type: number
+        default: 30
+      TASK:
+        description: 'Name test task'
+        required: true
+        type: string
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    timeout-minutes: ${{ inputs.TIMEOUT }}
+
+    steps:
+      - uses: actions/checkout@v3
+      - uses: actions/setup-java@v3
+        with:
+          java-version: ${{ inputs.JAVA_VERSION }}
+          distribution: ${{ inputs.JAVA_DISTRIBUTION }}
+      - name: Validate Gradle wrapper
+        uses: gradle/wrapper-validation-action@v1
+      - name: Setup Gradle
+        uses: gradle/gradle-build-action@v2
+      - name: Cache Gradle packages
+        uses: actions/cache@v3
+        with:
+          path: ~/.gradle/caches
+          key: ${{ runner.os }}-gradle-${{ hashFiles('**/*.gradle') }}
+          restore-keys: ${{ runner.os }}-gradle
+      - name: Run Tests
+        run: ./gradlew ${{ inputs.TASK }} --parallel
+        if: always()
+      - name: Tar files
+        run: cd build && zip -r $OLDPWD/report.zip classes/ reports/
+        if: always()
+      - uses: actions/upload-artifact@v3
+        with:
+          name: report
+          path: report.zip
+        if: always()
