@@ -22,7 +22,7 @@ on:
         default: 5
 
 jobs:
-  update-image-manifest:
+  update_image_manifest:
     runs-on: ubuntu-latest
     timeout-minutes: ${{ inputs.TIMEOUT }}
     name: Update manifests

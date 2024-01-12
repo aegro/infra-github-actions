@@ -14,7 +14,7 @@ on:
         type: string
 
 jobs:
-  k8s-manifests-validation:
+  validate_manifest-k8s:
     runs-on: ubuntu-latest
     name: k8s manifests validation
     steps:

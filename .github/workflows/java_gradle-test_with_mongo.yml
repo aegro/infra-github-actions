@@ -16,7 +16,7 @@ on:
         default: 'adopt'
 
 jobs:
-  test-with-mongo:
+  gradle-test_with_mongo:
     runs-on: ubuntu-latest
     services:
       mongodb:

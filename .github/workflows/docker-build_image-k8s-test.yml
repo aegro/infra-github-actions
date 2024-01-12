@@ -36,7 +36,7 @@ on:
         default: 10
 
 jobs:
-  build-docker-image:
+  docker-build_image:
     runs-on: ubuntu-latest
     timeout-minutes: ${{ inputs.TIMEOUT }}
     name: Docker Image

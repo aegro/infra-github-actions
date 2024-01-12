@@ -51,7 +51,7 @@ jobs:
     with:
       FAILURE: ${{ inputs.FAILURE }}
       SLACK_CHANNEL: ${{ inputs.SLACK_CHANNEL }}
-  new-relic:
+  new_relic:
     if: ${{ !inputs.FAILURE && inputs.NR_ENTITY_GUID != '' }}
     uses: ./.github/workflows/report_deploy-NR.yml
     secrets: inherit
