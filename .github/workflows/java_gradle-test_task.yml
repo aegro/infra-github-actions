@@ -52,7 +52,7 @@ jobs:
       - name: Run Tests
         run: ./gradlew ${{ inputs.TASK }} --parallel
       - name: Generate Jacoco Report
-        if: ${{ inputs.JACOCO }} && always()
+        if: ${{ inputs.JACOCO }}
         run: ./gradlew jacocoTestReport --parallel
       - name: Tar files
         run: cd build && zip -r $OLDPWD/coverage_report.zip classes/ reports/
