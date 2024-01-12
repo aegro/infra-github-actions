@@ -55,10 +55,10 @@ jobs:
         if: ${{ inputs.JACOCO }} && always()
         run: ./gradlew jacocoTestReport --parallel
       - name: Tar files
-        run: cd build && zip -r $OLDPWD/report.zip classes/ reports/
+        run: cd build && zip -r $OLDPWD/coverage_report.zip classes/ reports/
         if: always()
       - uses: actions/upload-artifact@v3
         with:
-          name: report
-          path: report.zip
+          name: coverage_report
+          path: coverage_report.zip
         if: always()
