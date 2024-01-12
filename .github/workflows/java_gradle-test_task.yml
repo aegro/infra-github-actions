@@ -22,6 +22,11 @@ on:
         description: 'Name test task'
         required: true
         type: string
+      JACOCO:
+        description: 'Jacoco run'
+        required: false
+        type: boolean
+        default: true
 
 jobs:
   test:
@@ -46,7 +51,9 @@ jobs:
           restore-keys: ${{ runner.os }}-gradle
       - name: Run Tests
         run: ./gradlew ${{ inputs.TASK }} --parallel
-        if: always()
+      - name: Generate Jacoco Report
+        if: ${{ inputs.JACOCO }} && always()
+        run: ./gradlew jacocoTestReport --parallel
       - name: Tar files
         run: cd build && zip -r $OLDPWD/report.zip classes/ reports/
         if: always()
