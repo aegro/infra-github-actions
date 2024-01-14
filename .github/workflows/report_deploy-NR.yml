@@ -27,7 +27,7 @@ on:
         default: 5
 
 jobs:
-  new-relic:
+  new_relic:
     runs-on: ubuntu-latest
     timeout-minutes: ${{ inputs.TIMEOUT }}
     steps:

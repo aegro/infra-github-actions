@@ -20,7 +20,7 @@ on:
         default: 15
 
 jobs:
-  build-war:
+  gradle-build_war:
     runs-on: ubuntu-latest
     timeout-minutes: ${{ inputs.TIMEOUT }}
     steps:

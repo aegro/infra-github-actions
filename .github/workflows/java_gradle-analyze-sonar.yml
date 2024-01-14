@@ -47,7 +47,7 @@ on:
         default: 20
 
 jobs:
-  analyze-sonar:
+  gradle-analyze-sonar:
     runs-on: ubuntu-latest
     timeout-minutes: ${{ inputs.TIMEOUT }}
     steps:
