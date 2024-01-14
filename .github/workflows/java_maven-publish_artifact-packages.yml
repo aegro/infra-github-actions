@@ -16,7 +16,7 @@ on:
         default: 'adopt'
         
 jobs:
-  publish-java-artifact:
+  maven-publish_artifact:
     runs-on: ubuntu-latest
     permissions:
       contents: read

@@ -14,13 +14,23 @@ on:
         required: false
         type: string
         default: 'adopt'
+      TASK:
+        description: 'Test task name'
+        required: false
+        type: string
+        default: 'test'
+      COVERAGE:
+        description: 'Generate and upload tests report (w/ coverage)'
+        required: false
+        type: boolean
+        default: true
       TIMEOUT:
         required: false
         type: number
         default: 30
 
 jobs:
-  test-with-redis:
+  gradle-test_with_redis:
     runs-on: ubuntu-latest
     timeout-minutes: ${{ inputs.TIMEOUT }}
     services:
@@ -45,11 +55,11 @@ jobs:
           key: ${{ runner.os }}-gradle-${{ hashFiles('**/*.gradle') }}
           restore-keys: ${{ runner.os }}-gradle
       - name: Run Tests
-        run: ./gradlew test --stacktrace --parallel
+        run: ./gradlew ${{ inputs.TASK }} --parallel
       - name: Generate Jacoco Report
         run: ./gradlew jacocoTestReport --parallel
-        if: always()
-      - name: Tar files
+        if: ${{ inputs.COVERAGE }}
+      - name: Tar Report Files
         run: cd build && zip -r $OLDPWD/coverage_report.zip classes/ reports/
         if: always()
       - uses: actions/upload-artifact@v3
