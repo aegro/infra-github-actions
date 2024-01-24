@@ -8,12 +8,12 @@ on:
         description: 'Java version'
         required: false
         type: string
-        default: '16'
+        default: '17'
       JAVA_DISTRIBUTION:
         description: 'Java distribution'
         required: false
         type: string
-        default: 'adopt'
+        default: 'corretto'
       TASK:
         description: 'Test task name'
         required: false
