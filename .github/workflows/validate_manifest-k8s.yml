@@ -18,7 +18,7 @@ jobs:
     runs-on: ubuntu-latest
     name: k8s manifests validation
     steps:
-      - uses: actions/checkout@v3
+      - uses: actions/checkout@v4
       - name: Validate manifests
         uses: stefanprodan/kube-tools@v1
         with:

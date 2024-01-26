@@ -8,12 +8,12 @@ on:
         description: 'Java version'
         required: false
         type: string
-        default: '16'
+        default: '17'
       JAVA_DISTRIBUTION:
         description: 'Java distribution'
         required: false
         type: string
-        default: 'adopt'
+        default: 'corretto'
         
 jobs:
   maven-publish_artifact:
@@ -22,8 +22,8 @@ jobs:
       contents: read
       packages: write
     steps:
-      - uses: actions/checkout@v3
-      - uses: actions/setup-java@v3
+      - uses: actions/checkout@v4
+      - uses: actions/setup-java@v4
         with:
           java-version: ${{ inputs.JAVA_VERSION }}
           distribution: ${{ inputs.JAVA_DISTRIBUTION }}

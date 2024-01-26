@@ -8,12 +8,12 @@ on:
         description: 'Java version'
         required: false
         type: string
-        default: '16'
+        default: '17'
       JAVA_DISTRIBUTION:
         description: 'Java distribution'
         required: false
         type: string
-        default: 'adopt'
+        default: 'corretto'
       TASK:
         description: 'Test task name'
         required: false
@@ -34,8 +34,8 @@ jobs:
     runs-on: ubuntu-latest
     timeout-minutes: ${{ inputs.TIMEOUT }}
     steps:
-      - uses: actions/checkout@v3
-      - uses: actions/setup-java@v3
+      - uses: actions/checkout@v4
+      - uses: actions/setup-java@v4
         with:
           java-version: ${{ inputs.JAVA_VERSION }}
           distribution: ${{ inputs.JAVA_DISTRIBUTION }}
@@ -44,7 +44,7 @@ jobs:
       - name: Setup Gradle
         uses: gradle/gradle-build-action@v2
       - name: Cache Gradle packages
-        uses: actions/cache@v3
+        uses: actions/cache@v4
         with:
           path: ~/.gradle/caches
           key: ${{ runner.os }}-gradle-${{ hashFiles('**/*.gradle') }}
@@ -57,7 +57,7 @@ jobs:
       - name: Tar Report Files
         run: cd build && zip -r $OLDPWD/coverage_report.zip classes/ reports/
         if: always()
-      - uses: actions/upload-artifact@v3
+      - uses: actions/upload-artifact@v4
         with:
           name: coverage_report
           path: coverage_report.zip
