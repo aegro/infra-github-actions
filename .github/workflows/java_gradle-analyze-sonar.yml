@@ -75,7 +75,7 @@ jobs:
       - name: Create build directory
         run: |
           mkdir -p build/sonar
-      - uses: actions/download-artifact@v4
+      - uses: actions/download-artifact@v3
         with:
           name: coverage_report
       - uses: montudor/action-zip@v1
