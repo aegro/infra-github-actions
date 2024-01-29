@@ -57,7 +57,7 @@ jobs:
         uses: aws-actions/amazon-ecr-login@v2
       - uses: actions/checkout@v4
       - name: Download artifact
-        uses: actions/download-artifact@v4
+        uses: actions/download-artifact@v3
         with:
           name: ${{ inputs.ARTIFACT }}
           path: ${{ inputs.ARTI_PATH }}
@@ -74,7 +74,7 @@ jobs:
           echo ${ECR_REPO} >> job.output
           docker image build . --file ${{ inputs.DOCKERFILE }} --build-arg ENV_BUILD=${{ inputs.ENV }} --build-arg NEW_RELIC_APP_NAME=${{ inputs.NEWRELIC-APP-NAME }} --build-arg NEW_RELIC_LICENSE_KEY=${{ secrets.NEW_RELIC_LICENSE_KEY }}  --tag ${ECR_REGISTRY}/${ECR_REPO}:${TAG}
           docker image push ${ECR_REGISTRY}/${ECR_REPO}:${TAG}
-      - uses: actions/upload-artifact@v4
+      - uses: actions/upload-artifact@v3
         with:
           name: docker-tag
           path: job.output
