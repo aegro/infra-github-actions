@@ -19,6 +19,10 @@ on:
         type: number
         default: 15
 
+env:
+  USERNAME_GIT: ${{ secrets.PKG_GITHUB_USERNAME }}
+  TOKEN_GIT: ${{ secrets.PKG_GITHUB_TOKEN }}
+
 jobs:
   gradle-build_war:
     runs-on: ubuntu-latest
