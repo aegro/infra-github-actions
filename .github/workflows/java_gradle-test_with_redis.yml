@@ -30,7 +30,7 @@ on:
         default: 30
 
 env:
-  USERNAME_GIT: aegro-github-bot
+  USERNAME_GIT: ${{ secrets.PKG_GITHUB_USERNAME }}
   TOKEN_GIT: ${{ secrets.PKG_GITHUB_TOKEN }}
 
 jobs:
