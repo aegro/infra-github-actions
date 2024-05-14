@@ -32,7 +32,7 @@ jobs:
     timeout-minutes: ${{ inputs.TIMEOUT }}
     steps:
       - name: New Relic Deployment Report
-        uses: newrelic/deployment-marker-action@v2.2.0
+        uses: newrelic/deployment-marker-action@v2.5.0
         with:
           apiKey: ${{ secrets.NR_API_KEY }}
           guid: ${{ inputs.NR_ENTITY_GUID }}
