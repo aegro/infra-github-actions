@@ -46,21 +46,21 @@ on:
 jobs:
   slack:
     if: ${{ inputs.SLACK_CHANNEL != '' }}
-    uses: ./.github/workflows/report_deploy-slack.yml
+    uses: aegro/infra-github-actions/.github/workflows/report_deploy-slack.yml
     secrets: inherit
     with:
       FAILURE: ${{ inputs.FAILURE }}
       SLACK_CHANNEL: ${{ inputs.SLACK_CHANNEL }}
   new_relic:
     if: ${{ !inputs.FAILURE && inputs.NR_ENTITY_GUID != '' }}
-    uses: ./.github/workflows/report_deploy-NR.yml
+    uses: aegro/infra-github-actions/.github/workflows/report_deploy-NR.yml
     secrets: inherit
     with:
       NR_ENTITY_GUID: ${{ inputs.NR_ENTITY_GUID }}
       DESCRIPTION: ${{ inputs.DESCRIPTION }}
   velocity:
     if: ${{ !inputs.FAILURE && inputs.ENVIRONMENT != '' }}
-    uses: ./.github/workflows/report_deploy-velocity.yml
+    uses: aegro/infra-github-actions/.github/workflows/report_deploy-velocity.yml
     secrets: inherit
     with:
       ENVIRONMENT: ${{ inputs.ENVIRONMENT }}
