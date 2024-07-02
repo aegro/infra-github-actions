@@ -12,6 +12,10 @@ on:
         description: 'Environment'
         required: true
         type: string
+      ENV-MANIFEST-FILE2:
+        description: 'Values custom'
+        required: true
+        type: string
 
 jobs:
   validate_manifest-k8s:
@@ -28,4 +32,4 @@ jobs:
           command: |
             SERVICE_NAME="$(echo ${GITHUB_REPOSITORY} | cut -d'/' -f2)"
             echo "Running kubeconform..."
-            helmv3 template ./k8s-deploy/${{inputs.SERVICE_NAME}} -f ./k8s-deploy/${{inputs.SERVICE_NAME}}/values-${{ inputs.ENV-MANIFEST-FILE }}.yaml | kubeconform -summary -strict -ignore-missing-schemas
+            helmv3 template ./k8s-deploy/${{inputs.SERVICE_NAME}} -f ./k8s-deploy/${{inputs.SERVICE_NAME}}/values-${{ inputs.ENV-MANIFEST-FILE }}.yaml -f ./k8s-deploy/${{inputs.SERVICE_NAME}}/values-${{ inputs.ENV-MANIFEST-FILE2 }}.yaml| kubeconform -summary -strict -ignore-missing-schemas
