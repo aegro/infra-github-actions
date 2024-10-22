@@ -1,0 +1,114 @@
+# Analyzes a java project using sonar with gradle
+name: Analyze Java using Maven
+
+on:
+  workflow_call:
+    secrets:
+      SONAR_TOKEN:
+        description: 'Sonar Token'
+        required: true
+    inputs:
+      SONAR_URL:
+        description: 'Sonar Host Url'
+        required: false
+        type: string
+        default: 'https://sonarcloud.io'
+      SONAR_ORGANIZATION:
+        description: 'Sonar organization'
+        required: false
+        type: string
+        default: 'aegro-github'
+      SONAR_SOURCE_ENCODING:
+        description: 'Sonar source encoding'
+        required: false
+        type: string
+        default: 'UTF-8'
+      SONAR_PROJECT_KEY:
+        description: 'Sonar project key'
+        required: false
+        type: string
+      SONAR_PROJECT_NAME:
+        description: 'Sonar project name'
+        required: false
+        type: string
+      JAVA_VERSION:
+        description: 'Java version'
+        required: false
+        type: string
+        default: '17'
+      JAVA_DISTRIBUTION:
+        description: 'Java distribution'
+        required: false
+        type: string
+        default: 'corretto'
+      TIMEOUT:
+        required: false
+        type: number
+        default: 20
+      JAVA_PATH:
+        description: 'Java path'
+        required: false
+        type: string
+        default: '$PWD'
+      SONAR_SOURCES:
+        description: 'Sonar sources'
+        required: false
+        type: string
+        default: 'src/main/java'
+      SONAR_TESTS:
+        description: 'Sonar tests'
+        required: false
+        type: string
+        default: 'src/test/java'
+      SONAR_BINARIES:
+        description: 'Sonar binaries'
+        required: false
+        type: string
+        default: 'target/classes'
+
+env:
+  USERNAME_GIT: ${{ secrets.PKG_GITHUB_USERNAME }}
+  TOKEN_GIT: ${{ secrets.PKG_GITHUB_TOKEN }}
+
+jobs:
+  gradle-analyze-sonar:
+    runs-on: ubuntu-latest
+    timeout-minutes: ${{ inputs.TIMEOUT }}
+    steps:
+
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0  # Shallow clones should be disabled for a better relevancy of analysis
+      - name: Set up JDK 17
+        uses: actions/setup-java@v4
+        with:
+          java-version: ${{ inputs.JAVA_VERSION }}
+          distribution: ${{ inputs.JAVA_DISTRIBUTION }}
+      - name: Cache SonarCloud packages
+        uses: actions/cache@v4
+        with:
+          path: ~/.sonar/cache
+          key: ${{ runner.os }}-sonar
+          restore-keys: ${{ runner.os }}-sonar
+      - name: Cache Maven packages
+        uses: actions/cache@v4
+        with:
+          path: ~/.m2
+          key: ${{ runner.os }}-m2-${{ hashFiles('**/pom.xml') }}
+          restore-keys: ${{ runner.os }}-m2
+
+      - name: Build and analyze Project
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
+        run: |
+          cd ${{ inputs.JAVA_PATH }}
+          mvn -B verify org.sonarsource.scanner.maven:sonar-maven-plugin:sonar \
+            -Dsonar.projectKey=${{ inputs.SONAR_PROJECT_KEY }} \
+            -Dsonar.projectBaseDir=./${{ inputs.JAVA_PATH }} \
+            -Dsonar.projectName=${{ inputs.SONAR_PROJECT_NAME }} \
+            -Dsonar.organization=${{ inputs.SONAR_ORGANIZATION }} \
+            -Dsonar.host.url=${{ inputs.SONAR_URL }} \
+            -Dsonar.sources=${{ inputs.SONAR_SOURCES }} \
+            -Dsonar.tests=${{ inputs.SONAR_TESTS }} \
+            -Dsonar.java.binaries=${{ inputs.SONAR_BINARIES }}
