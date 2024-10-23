@@ -1,4 +1,3 @@
-# Runs java application tests using gradle
 name: Test Java using Maven
 
 on:
